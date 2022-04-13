@@ -23,13 +23,31 @@ namespace Cyberspace.Starter
         {
             return i * j;
         }
+
+        public static void Method()
+        {
+
+        }
+        public static int Method2(int a)
+        {
+            return 0;
+        }
     }
     public class Program
     {
         
         static void Main()
         {
+            Action action = ArithmeticOperation.Method;
+            Func<int, int> func = ArithmeticOperation.Method2;
+
+            Func<int, bool, string> func1 = (a, b) =>
+            {
+                return "something";
+            };
+
             var myArray = new ArithmeticOperationDelegate[3];
+            //or var myArray = new Func<int, int, int>[3];
             int i = 0;
 
             //Using a for loop
