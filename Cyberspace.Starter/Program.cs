@@ -3,48 +3,75 @@
 
 namespace Cyberspace.Starter
 {
-   public class ShoppingBag<T> where T : Bag
-    {
-        public T[] items = new T[5];
-        int _index = 0;
-        public void AddItem(T bags)
-        {
-            items[_index++] = bags;
-        }
+    public delegate int MyDelegate(int x, int y);
+    public delegate int Arithmetic<Z>(Z x, Z y);
 
-        public T GetItem(int index)
+    //Classwork
+    public delegate int ArithmeticOperationDelegate(int a, int b);
+
+    public class ArithmeticOperation
+    {
+        public static int Add(int i, int j)
         {
-            return items[index];
+            return i + j;
+        }
+        public static int Minus(int i, int j)
+        {
+            return i - j;
+        }
+        public static int Multiply(int i, int j)
+        {
+            return i * j;
         }
     }
-
-    public class Bag
-    {
-        public string Name { get; set; }  
-        public int Count { get; set; }
-
-        public override string ToString()
-        {
-            return $"Name: {Name}\nCount: {Count}";
-        }
-    }
-
     public class Program
     {
+        
         static void Main()
         {
-            var shoppingBag = new ShoppingBag<Bag>();
-            shoppingBag.AddItem(new Bag() { Name = "Spaghetti", Count = 20});
-            shoppingBag.AddItem(new Bag() { Name = "Rice", Count = 34 });
-            var counter = 0;
-            while (counter < 5)
+            var myArray = new ArithmeticOperationDelegate[3];
+            int i = 0;
+
+            //Using a for loop
+
+            //for (int i = 0; i < myArray.Length; i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        myArray[i] = ArithmeticOperation.Add;
+            //    }
+            //    else if (i == 1)
+            //    {
+            //        myArray[i] = ArithmeticOperation.Minus;
+            //    }
+            //    else if (i == 2)
+            //    {
+            //        myArray[i] = ArithmeticOperation.Multiply;
+            //    }
+
+            //    var result = myArray[i];
+
+            //    Console.WriteLine("Method: " + result(50, 40));
+            //}
+
+            //Using a switch statement
+            switch (i)
             {
-                Console.WriteLine(shoppingBag.GetItem(counter));
-                counter++;
+                case 0:
+                    myArray[i] = ArithmeticOperation.Add;
+                    Console.WriteLine("Method: " + myArray[i](50, 40));
+                    goto case 1;
+                case 1:
+                    myArray[i] = ArithmeticOperation.Minus;
+                    Console.WriteLine("Method: " + myArray[i](50, 40));
+                    goto default;
+                default:
+                    myArray[i] = ArithmeticOperation.Multiply;
+                    Console.WriteLine("Method: " + myArray[i](50, 40));
+                    break;
             }
-            shoppingBag.GetItem(3);
+            
         }
-        
     }
 
 }
