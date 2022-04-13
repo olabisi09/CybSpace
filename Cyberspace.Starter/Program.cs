@@ -16,6 +16,11 @@ namespace Cyberspace.Starter
         {
             return items[index];
         }
+
+        public T this[int index]
+        {
+            get { return items[index]; }
+        }
     }
 
     public class Bag
@@ -29,20 +34,44 @@ namespace Cyberspace.Starter
         }
     }
 
+    public class Person
+    {
+        public string Name { get; set; }
+    }
+
+    public class People
+    {
+        private readonly Person[] names =
+        {
+            new Person { Name = "Jumoke" },
+            new Person { Name = "Jimi"}
+        };
+
+        public Person this[int index]
+        {
+            get { return names[index]; }
+        }
+
+    }
+
     public class Program
     {
         static void Main()
         {
-            var shoppingBag = new ShoppingBag<Bag>();
-            shoppingBag.AddItem(new Bag() { Name = "Spaghetti", Count = 20});
-            shoppingBag.AddItem(new Bag() { Name = "Rice", Count = 34 });
-            var counter = 0;
-            while (counter < 5)
-            {
-                Console.WriteLine(shoppingBag.GetItem(counter));
-                counter++;
-            }
-            shoppingBag.GetItem(3);
+            //var shoppingBag = new ShoppingBag<Bag>();
+            //shoppingBag.AddItem(new Bag() { Name = "Spaghetti", Count = 20 });
+            //shoppingBag.AddItem(new Bag() { Name = "Rice", Count = 34 });
+            //var counter = 0;
+            //while (counter < 5)
+            //{
+            //    Console.WriteLine(shoppingBag[counter]);
+            //    counter++;
+            //}
+            //shoppingBag.GetItem(3);
+
+            var p= new People();
+            
+            Console.WriteLine(p[1]);
         }
         
     }
