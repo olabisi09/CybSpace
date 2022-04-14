@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Threading;
 
 namespace Cyberspace.Starter
 {
@@ -23,7 +23,13 @@ namespace Cyberspace.Starter
 
     public class Program
     {
-        
+        public static void PrintStuff(params int[] numbers)
+        {
+           foreach (int number in numbers)
+            {
+                Console.WriteLine(number);
+            }
+        }
         static void Main()
         {
             Container container = new Container();
@@ -34,9 +40,8 @@ namespace Cyberspace.Starter
             {
                 Console.WriteLine("All done with the event.");
             }
-
-            
-            
+            // Thread.Sleep(3000); makes the code pause running for a specified number of milliseconds.
+            PrintStuff(1, 2, 4, 5);
         }
     }
 
