@@ -15,7 +15,7 @@ namespace Cyberspace.Starter
         {
             if (langToUse == "CSharp")
             {
-                Console.WriteLine($"Check if the string '{stringToCheck}' is in C#.");
+                Console.WriteLine($"Check if the string '{stringToCheck}' is in C#.".ToString());
                 return true;
             }
             else if (langToUse == "VB2005")
