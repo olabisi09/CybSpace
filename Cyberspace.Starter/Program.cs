@@ -3,50 +3,33 @@
 
 namespace Cyberspace.Starter
 {
-    public class Book
-    {
-        public string title;
-        public string author;
-        public string ISBN;
-
-        public void ReadBook()
-        {
-            Console.WriteLine("This book can been read.");
-        }
-
-        public void ShelveBook()
-        {
-            Console.WriteLine("This book has been shelved.");
-        }
-    }
-
     public class Program
     {
         public static void Main()
         {
-            Car car = new Car(); //Create an instance of the class
-            car.DisplayVehicleType("Corolla"); //Inherits the DisplayVehicleType method from Vehicle
-            car.GetBrandName();
+            string star = "*";
 
-            Truck truck = new Truck(); //Create an instance of the class
-            truck.DisplayVehicleType("Volkswagen"); //Inherits the DisplayVehicleType method from Vehicle
-            truck.GetBrandName();
+            //in ascending order
+            for (int i = 1; i <= 6; i++)
+            {
+                for (int j = 1; j <= i - 1; j++)
+                {
+                    Console.Write(star);
+                }
+                Console.WriteLine(star);
+            }
 
-            Motorcycle motorcycle = new Motorcycle(); //Create an instance of the class
-            motorcycle.DisplayVehicleType("Vespa"); //Inherits the DisplayVehicleType method from Vehicle
-            motorcycle.GetBrandName();
+            Console.WriteLine("--------------------");
 
-
-            //Book someBook = new Book();
-
-            //someBook.title = "The Hobbit";
-            //someBook.author = "J.R.R Tolkien";
-            //someBook.ISBN = "FR-543";
-
-            //someBook.ReadBook();
-            //someBook.ShelveBook();
-            //Console.WriteLine("Title: {0}\nAuthor: {1}\nISBN: {2}", someBook.title, someBook.author, someBook.ISBN);
+            //in descending order
+            for (int i = 6; i >= 1; i--)
+            {
+                for (int j = i - 1; j >= 1; j--)
+                {
+                    Console.Write(star);
+                }
+                Console.WriteLine(star);
+            }
         }
-        
     }
 }
