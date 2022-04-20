@@ -1,9 +1,7 @@
 ﻿using System;
 
-
 namespace Cyberspace.Starter
 {
-    public delegate int MyDelegate(int x, int y);
     public delegate int Arithmetic<Z>(Z x, Z y);
 
     //Classwork
@@ -35,9 +33,10 @@ namespace Cyberspace.Starter
     }
     public class Program
     {
-        
         static void Main()
         {
+            
+
             Action action = ArithmeticOperation.Method;
             Func<int, int> func = ArithmeticOperation.Method2;
 
@@ -48,7 +47,7 @@ namespace Cyberspace.Starter
 
             var myArray = new ArithmeticOperationDelegate[3];
             //or var myArray = new Func<int, int, int>[3];
-            int i = 0;
+
 
             //Using a for loop
 
@@ -73,6 +72,8 @@ namespace Cyberspace.Starter
             //}
 
             //Using a switch statement
+
+            int i = 0;
             switch (i)
             {
                 case 0:
@@ -88,7 +89,8 @@ namespace Cyberspace.Starter
                     Console.WriteLine("Method: " + myArray[i](50, 40));
                     break;
             }
-            
+
+
         }
     }
 
