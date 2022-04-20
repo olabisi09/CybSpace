@@ -17,6 +17,21 @@ namespace Cyberspace.Starter
             result = left.X == right.X ? false : true;
             return result;
         }
+
+        public static bool operator >=(Overload left, Overload right)
+        {
+            bool result = false;
+            result = left.X >= right.X ? true : false;
+            return result;
+        }
+
+        public static bool operator <=(Overload left, Overload right)
+        {
+            bool result = false;
+            result = left.X <= right.X ? true : false;
+            return result;
+        }
+
     }
     public class Program
     {
