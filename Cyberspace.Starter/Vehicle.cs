@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,43 +7,51 @@ using System.Threading.Tasks;
 
 namespace Cyberspace.Starter
 {
-    public class Vehicle
+    public class Vehicle : IEnumerable
     {
-        public string brandName = "Toyota";
-
-        public void DisplayVehicleType(string vehicleType)
+        private readonly VehicleEnumerator vehicleEnumerator;
+        public Vehicle(Car[] cars)
         {
-            Console.WriteLine("This is a {0}", vehicleType);
+            vehicleEnumerator = new VehicleEnumerator(cars);
+        }
+        public IEnumerator GetEnumerator()
+        {
+            return vehicleEnumerator;
         }
     }
 
-    public class Car : Vehicle
+    public class VehicleEnumerator : IEnumerator
     {
-        public string vehicleType = "Car";
-        public void GetBrandName()
+        public Car[] CarList { get; set; }
+        public VehicleEnumerator(Car[] vehicles)
         {
-            //displays the variable 'brandName' inherited from the Vehicle class.
-            Console.WriteLine("Brand: {0}", brandName);
+            this.CarList = vehicles;
+        }
+
+        private int counter = -1;
+        public object Current => CarList[counter];
+
+        public bool MoveNext()
+        {
+            counter++;
+            if (counter > CarList.Length - 1) return false;
+            return true;
+        }
+
+        public void Reset()
+        {
+            counter = -1;
         }
     }
 
-    public class Truck : Vehicle
+    public class Car
     {
-        public string vehicleType = "Truck";
-        public void GetBrandName()
-        {
-            //displays the variable 'brandName' inherited from the Vehicle class.
-            Console.WriteLine("Brand: {0}", brandName);
-        }
-    }
+        public string Brand { get; set; }
+        public int Year { get; set; }
 
-    public class Motorcycle : Vehicle
-    {
-        public string vehicleType = "Motorcycle";
-        public void GetBrandName()
+        public override string ToString()
         {
-            //displays the variable 'brandName' inherited from the Vehicle class.
-            Console.WriteLine("Brand: {0}", brandName);
+            return $"Brand: {Brand}, Year: {Year}";
         }
     }
 
