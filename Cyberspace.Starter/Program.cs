@@ -35,12 +35,35 @@ namespace Cyberspace.Starter
     }
     public class Program
     {
+        public class CustomException : Exception
+        {
+            public CustomException(string message) : base(message)
+            {
+
+            }
+        }
         static void Main()
         {
-            Overload overload = new Overload() { X = 90};
-            Overload overload2 = new Overload() { X = 90 };
-            bool result = overload == overload2;
-            Console.WriteLine(result);
+            try
+            {
+                int d = 0;
+                int i = 5 / d;
+                Console.WriteLine(i);
+                //throw new CustomException("Custom exception was thrown.");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"Format Error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                Console.WriteLine("Stuff after the exception");
+            }
+
         }
     }
 
