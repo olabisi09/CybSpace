@@ -8,37 +8,31 @@ namespace Cyberspace.Starter
     {
         static void Main()
         {
-            //Demonstrating IEnumerable
-            var cars = new Car[]
-            {
-                new Car(){Brand = "Lexus", Year = 2012},
-                new Car(){Brand = "BMW", Year = 2019}
-            };
+            Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            dictionary.Add("ID", 1);
+            dictionary["Age"] = 20;
 
-            var vehicles = new Vehicle(cars);
-
-            foreach (var c in vehicles)
+            foreach (var item in dictionary)
             {
-                Console.WriteLine(c);
+                Console.WriteLine(item);
+            }
+            return;
+            SortedSet<int> s = new SortedSet<int>() { 44, 53, 1, 98, 4 };
+            foreach (int i in s)
+            {
+                Console.WriteLine(i);
             }
 
-            //Demonstrating IComparable
-            var people = new PersonDetails[]
-            {
-                new PersonDetails(2, "John Doe"),
-                new PersonDetails(1, "Hanna Brown"),
-                new PersonDetails(5, "Davy Jones")
-            };
-            Array.Sort(people);
+            Queue<string> queue = new Queue<string>();
+            queue.Enqueue("Un");
+            queue.Enqueue("Deux");
+            queue.Dequeue();
+            Console.WriteLine(queue.Contains("Deux"));
 
-            foreach (var person in people)
-            {
-                Console.WriteLine(person);
-            }
+            Stack<string> stack = new Stack<string>();
+            stack.Push("Trois");
 
-            //list does the job of Array, but builds upon it by being able to add to the list and increasing the number of items it can take
-            var list = new List<string>() { "John", "Jane", "Hanna"}; //using a collection initializer
-            Console.WriteLine("Capacity of list: " + list.Capacity);
+            Console.WriteLine(stack);
         }
     }
 }
