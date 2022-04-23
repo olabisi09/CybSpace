@@ -6,23 +6,20 @@ using System.Threading.Tasks;
 
 namespace Cyberspace.Starter
 {
-    public class Product : IComparable<Product>
+    public class Product : IComparer<Product>
     {
         public string Name { get; set; }   
         public int Quantity { get; set; }
 
-        public int CompareTo(Product other)
+        public int Compare(Product x, Product y)
         {
-            if (other == null) return 1;
-            return Quantity.CompareTo(other.Quantity);
+            return x.Quantity.CompareTo(y.Quantity);
         }
 
-        //public int CompareTo(object obj)
+        //public int CompareTo(Product other)
         //{
-        //    if (obj == null) return 1;
-        //    Product product = obj as Product;
-        //    if (product == null) return -1;
-        //    else return 0;
+        //    if (other == null) return 1;
+        //    return Quantity.CompareTo(other.Quantity);
         //}
 
         public override string ToString()
