@@ -24,13 +24,12 @@ namespace Cyberspace.Starter
                 new Product() { Name = "Head and Shoulders", Quantity = 33},
                 new Product() {Name = "Lipton Tea", Quantity = 63}
             };
-            products.Sort(new Product());
-            products.Reverse();
+            products.Sort(new SortProducts<Product>());
 
             //products.ForEach(p => Console.WriteLine(p.ToString()));
             foreach (var product in products)
             {
-                Console.WriteLine(product.ToString());
+                Console.WriteLine(product);
             }
             
         }
