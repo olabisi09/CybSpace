@@ -2,95 +2,41 @@
 
 namespace Cyberspace.Starter
 {
-    public delegate int Arithmetic<Z>(Z x, Z y);
-
-    //Classwork
-    public delegate int ArithmeticOperationDelegate(int a, int b);
-
-    public class ArithmeticOperation
-    {
-        public static int Add(int i, int j)
-        {
-            return i + j;
-        }
-        public static int Minus(int i, int j)
-        {
-            return i - j;
-        }
-        public static int Multiply(int i, int j)
-        {
-            return i * j;
-        }
-
-        public static void Method()
-        {
-
-        }
-        public static int Method2(int a)
-        {
-            return 0;
-        }
-    }
     public class Program
     {
         static void Main()
         {
+            Func<int, int, int> func = (int x, int y) => x + y;
+            Arith.Add((x, y) => x + y);
+
+            int[] numbers = { 1, 2, 3, 4, 5, 6 };
+            int counter = 0;
             
 
-            Action action = ArithmeticOperation.Method;
-            Func<int, int> func = ArithmeticOperation.Method2;
-
-            Func<int, bool, string> func1 = (a, b) =>
+            Action<int> timesTwo = (int x) => 
             {
-                return "something";
+                numbers[counter] = x * 2;
+                counter++;
             };
+            Array.ForEach(numbers, timesTwo);
 
-            var myArray = new ArithmeticOperationDelegate[3];
-            //or var myArray = new Func<int, int, int>[3];
-
-
-            //Using a for loop
-
-            //for (int i = 0; i < myArray.Length; i++)
-            //{
-            //    if (i == 0)
-            //    {
-            //        myArray[i] = ArithmeticOperation.Add;
-            //    }
-            //    else if (i == 1)
-            //    {
-            //        myArray[i] = ArithmeticOperation.Minus;
-            //    }
-            //    else if (i == 2)
-            //    {
-            //        myArray[i] = ArithmeticOperation.Multiply;
-            //    }
-
-            //    var result = myArray[i];
-
-            //    Console.WriteLine("Method: " + result(50, 40));
-            //}
-
-            //Using a switch statement
-
-            int i = 0;
-            switch (i)
+            //shorter way of doing the above
+            Array.ForEach(numbers, (int x) =>
             {
-                case 0:
-                    myArray[i] = ArithmeticOperation.Add;
-                    Console.WriteLine("Method: " + myArray[i](50, 40));
-                    goto case 1;
-                case 1:
-                    myArray[i] = ArithmeticOperation.Minus;
-                    Console.WriteLine("Method: " + myArray[i](50, 40));
-                    goto default;
-                default:
-                    myArray[i] = ArithmeticOperation.Multiply;
-                    Console.WriteLine("Method: " + myArray[i](50, 40));
-                    break;
+                numbers[counter] = x * 2;
+                counter++;
+            });
+            var arith = new Arith();
+            arith.Prop = x => x * 2;
+        }
+
+        public class Arith
+        {
+            public Func<int, int> Prop { get; set; }
+            public static int Add(Func<int, int, int> sum)
+            {
+                return sum(3, 6);
             }
-
-
         }
     }
 
