@@ -24,7 +24,7 @@ namespace Cyberspace.Starter
                 new Product() { Name = "Head and Shoulders", Quantity = 33},
                 new Product() {Name = "Lipton Tea", Quantity = 63}
             };
-            products.Sort(new SortProducts<Product>());
+            products.Sort(new SortProducts());
 
             //products.ForEach(p => Console.WriteLine(p.ToString()));
             foreach (var product in products)
