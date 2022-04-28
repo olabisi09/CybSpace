@@ -8,53 +8,40 @@ namespace Cyberspace.Starter
     {
         static void Main()
         {
-            int[] evenNumbers = { 2, 4, 6 };
-            int[] oddNumbers = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };
-            int[] sampleNumbers = { 23, 4, 10, 6, 7, 19, 19};
-            
-            var example = evenNumbers.Where(x => x < 20).Sum(x => x - 20);
-            
+            var sales = Sales.GetSales();
+            var items = Item.GetItems();
 
-            var aggExample = evenNumbers.Aggregate((a, b) => a + b * b);
-            Console.WriteLine(aggExample);
+            var joinStuff = sales.GroupJoin(items, x => x.Id, y => y.SalesId, (x, groupedItems) => new
+            {
+                x.Id, x.CategoryName,
+                groupedItems
+            });
 
-            var employees = Employee.GetEmployees();
-            var someEmployees = employees.All(x => x.RollNumber < 105);
+            var altJoinStuff = from x in sales
+                               join y in items
+                               on x.Id equals y.SalesId into groups
+                               select new
+                               {
+                                   x.Id,
+                                   x.CategoryName,
+                                   groups
+                               };
 
-            //union 
-            var nums = evenNumbers.Union(oddNumbers).Average(x => x);
+            foreach (var item in altJoinStuff)
+            {
+                Console.WriteLine($"{item.CategoryName} has the following items:");
+                foreach (var result in item.groups)
+                {
+                    Console.WriteLine($"Id: {result.SalesId}, Item name: {result.ItemName}, Amount: {result.Amount}");
+                }
+                Console.WriteLine();
+            }
 
+            var sum = items.Sum(x => x.Amount);
+            Console.WriteLine($"Total sales: {sum}");
 
-            var allNumbers = evenNumbers.Where(x => x > 10).Union(evenNumbers.Where(x => x < 10)).OrderBy(x => x);
-
-
-
-            //intersect
-            var intersectNumbers = evenNumbers.Intersect(sampleNumbers).OrderBy(x => x);
-
-
-
-            //except
-            var exceptNumbers = sampleNumbers.Except(evenNumbers);
-
-
-
-            //distinct
-            var distinctNumbers = sampleNumbers.Distinct();
-
-
-            //aggregate operators
-
-
-            //sum
-            var aggNums = evenNumbers.Sum(x => x);
- 
-
-            var agg = evenNumbers.Aggregate((x, y) => x * y);
-            //Console.WriteLine(agg);
-
-            //min
-            var minNumbers = sampleNumbers.Min(x => x);
+            var averageRollNo = items.Average(x => x.RollNumber);
+            Console.WriteLine($"Average of roll numbers: {averageRollNo}");
         }
     }
 }
