@@ -8,96 +8,53 @@ namespace Cyberspace.Starter
     {
         static void Main()
         {
+            int[] evenNumbers = { 2, 4, 6 };
+            int[] oddNumbers = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };
+            int[] sampleNumbers = { 23, 4, 10, 6, 7, 19, 19};
+            
+            var example = evenNumbers.Where(x => x < 20).Sum(x => x - 20);
+            
+
+            var aggExample = evenNumbers.Aggregate((a, b) => a + b * b);
+            Console.WriteLine(aggExample);
+
             var employees = Employee.GetEmployees();
-            var lineManager = Salary.GetSalaries();
+            var someEmployees = employees.All(x => x.RollNumber < 105);
 
-            mylabel1:
-            //Left outer join: query syntax
-            var leftOuterJoinQuery = from x in lineManager
-                                 join y in employees
-                                 on x.Id equals y.Designation into groupedEmployees
-                                 from g in groupedEmployees.DefaultIfEmpty()
-                                 select new
-                                 {
-                                     x.Id,
-                                     x.LineManager,
-                                     groupedEmployees = g == null ? "No employees in this category." : g.Name,
-                                     groupedNumber = g == null ? 0 : g.RollNumber
-                                 };
-            goto mylabel1;
-
-            //Group join: query syntax
-            var groupJoinQuery = from x in lineManager
-                              join y in employees
-                              on x.Id equals y.Designation
-                              into groupedEmployees
-                              select new
-                              {
-                                  x.Id,
-                                  x.LineManager,
-                                  groupedEmployees
-                              };
-
-            foreach (var item in leftOuterJoinQuery)
-            {
-                Console.WriteLine($"Name: {item.LineManager}, Roll Number: {item.groupedNumber}");
-            }
-
-            foreach (var employee in groupJoinQuery)
-            {
-                Console.WriteLine($"{employee.LineManager} manages the following employees:");
-                foreach (var under in employee.groupedEmployees)
-                {
-                    Console.WriteLine($"Name: {under.Name}, Roll Number {under.RollNumber}");
-                }
-                Console.WriteLine();
-            }
+            //union 
+            var nums = evenNumbers.Union(oddNumbers).Average(x => x);
 
 
-            //Group join: extenstion method syntax
-            var groupJoinExtension = lineManager.GroupJoin(employees, x => x.Id, y => y.Designation, (x, groupedEmployees) => new
-            {
-                x.LineManager,
-                groupedEmployees
-            });
-
-            foreach (var employee in groupJoinExtension)
-            {
-                Console.WriteLine($"{employee.LineManager} manages the following employees:");
-                foreach (var under in employee.groupedEmployees)
-                {
-                    Console.WriteLine($"Name: {under.Name}, Roll Number {under.RollNumber}");
-                }
-                Console.WriteLine();
-            }
+            var allNumbers = evenNumbers.Where(x => x > 10).Union(evenNumbers.Where(x => x < 10)).OrderBy(x => x);
 
 
 
-            //Join or inner join: Using the query syntax
-            var innerJoinQuery = from employee in employees
-                                 join manager in lineManager
-                                 on employee.Designation
-                                 equals manager.Id
-                                 select new
-                                 {
-                                     employee.Name,
-                                     manager.LineManager,
-                                     employee.Gender
-                                 };
+            //intersect
+            var intersectNumbers = evenNumbers.Intersect(sampleNumbers).OrderBy(x => x);
 
 
-            //Join or inner join: Using the extension method syntax
-            var innerJoinExtension = employees.Join(lineManager, x => x.Designation, y => y.Id, (x, y) => new
-            {
-                x.Name,
-                y.LineManager,
-                y.SalaryAmount
-            }).Where(y => y.SalaryAmount < 5000).OrderByDescending(x => x.Name);
 
-            foreach (var line in innerJoinExtension)
-            {
-                Console.WriteLine($"Employee name: {line.Name}, Line Manager: {line.LineManager}, Designation: {line.SalaryAmount}");
-            }
+            //except
+            var exceptNumbers = sampleNumbers.Except(evenNumbers);
+
+
+
+            //distinct
+            var distinctNumbers = sampleNumbers.Distinct();
+
+
+            //aggregate operators
+
+
+            //sum
+            var aggNums = evenNumbers.Sum(x => x);
+ 
+
+            var agg = evenNumbers.Aggregate((x, y) => x * y);
+            //Console.WriteLine(agg);
+
+            //min
+            var minNumbers = sampleNumbers.Min(x => x);
         }
     }
 }
