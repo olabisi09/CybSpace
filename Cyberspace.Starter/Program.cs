@@ -8,40 +8,16 @@ namespace Cyberspace.Starter
     {
         static void Main()
         {
-            var sales = Sales.GetSales();
-            var items = Item.GetItems();
+            //element operations in LINQ
 
-            var joinStuff = sales.GroupJoin(items, x => x.Id, y => y.SalesId, (x, groupedItems) => new
-            {
-                x.Id, x.CategoryName,
-                groupedItems
-            });
+            //First(), FirstOrDefault(), Last(), LastOrDefault()
+            int[] numbers = {1, 2, 3, 4, 5, 6};
+            Console.WriteLine(numbers.LastOrDefault());
 
-            var altJoinStuff = from x in sales
-                               join y in items
-                               on x.Id equals y.SalesId into groups
-                               select new
-                               {
-                                   x.Id,
-                                   x.CategoryName,
-                                   groups
-                               };
-
-            foreach (var item in altJoinStuff)
-            {
-                Console.WriteLine($"{item.CategoryName} has the following items:");
-                foreach (var result in item.groups)
-                {
-                    Console.WriteLine($"Id: {result.SalesId}, Item name: {result.ItemName}, Amount: {result.Amount}");
-                }
-                Console.WriteLine();
-            }
-
-            var sum = items.Sum(x => x.Amount);
-            Console.WriteLine($"Total sales: {sum}");
-
-            var averageRollNo = items.Average(x => x.RollNumber);
-            Console.WriteLine($"Average of roll numbers: {averageRollNo}");
+            //Single(), SingleOrDefault()
+            var some = numbers.Single();
+            var all = numbers.SingleOrDefault(x => x >= 3);
+            Console.WriteLine(all);
         }
     }
 }
