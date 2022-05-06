@@ -1,33 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cyberspace.Starter
 {
     public class Program
     {
-        static void Main()
+        static async Task Main()
         {
-            //Quantifiers
-            //.Any(), All() SelectMany()
-            var employees = Employee.GetEmployees();
+            var taskResult = PrintMoreAsync();
+            
 
-            var checkAny = employees.Any(x => x.Age == 22);
-            var checkAll = employees.Any(x => x.Age == employees[0].Age);
-
-            var checkOne = employees.SelectMany(x => x.Skillsets, (x, y) => new
+            for (int i = 0; i < 5; i++)
             {
-                firstName = x.FirstName,
-                lastName = x.LastName,
-                skills = y
-            });
-
-            var dictionary = employees.ToDictionary(x => x.FirstName);
-
-            foreach (var check in dictionary.Keys)
-            {
-                Console.WriteLine($"Key: {check}, Value: {dictionary[check].Age}");
+                PrintMore($"B{i}");
+                Task.Delay(2000).Wait();
             }
+
+            
+            PrintMore("Waiting for PrintMoreAsync() to finish");
+            int k = await taskResult;
+            Console.WriteLine(taskResult);
+            Console.Read();
+        }
+
+        public static async Task<int> PrintMoreAsync()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                PrintMore($"A{i}");
+                await Task.Delay(2000);
+            }
+
+            int result = 123;
+            Console.WriteLine($"Returns {result}");
+            return result;
+        }
+
+        public static void PrintMore(string message)
+        {
+            int threadID = Thread.CurrentThread.ManagedThreadId;
+            Console.ForegroundColor = threadID == 1? ConsoleColor.Blue : ConsoleColor.Red;
+            string tab = new string(' ', 37 - message.Length);
+            Console.WriteLine($"{message}{tab}Thread{threadID}");
         }
     }
 }
