@@ -10,41 +10,36 @@ namespace Cyberspace.Starter
     {
         static async Task Main()
         {
-            var taskResult = PrintMoreAsync();
+            Console.WriteLine("Calculating...");
+            await Calculate();
             
-
-            for (int i = 0; i < 5; i++)
-            {
-                PrintMore($"B{i}");
-                Task.Delay(2000).Wait();
-            }
-
-            
-            PrintMore("Waiting for PrintMoreAsync() to finish");
-            int k = await taskResult;
-            Console.WriteLine(taskResult);
-            Console.Read();
+            //Console.Read();
         }
 
-        public static async Task<int> PrintMoreAsync()
+        public static async Task Calculate()
         {
-            for (int i = 0; i < 5; i++)
-            {
-                PrintMore($"A{i}");
-                await Task.Delay(2000);
-            }
-
-            int result = 123;
-            Console.WriteLine($"Returns {result}");
-            return result;
+            await Task.Run(() => One());
+            await Task.Run(() => Two());
+            await Task.Run(() => Three());
         }
 
-        public static void PrintMore(string message)
+        public static async Task<int> One()
         {
-            int threadID = Thread.CurrentThread.ManagedThreadId;
-            Console.ForegroundColor = threadID == 1? ConsoleColor.Blue : ConsoleColor.Red;
-            string tab = new string(' ', 37 - message.Length);
-            Console.WriteLine($"{message}{tab}Thread{threadID}");
+            Thread.Sleep(3000);
+            Console.WriteLine("Calculating one...");
+            return 100;
+        }
+
+        public static async Task<int> Two()
+        {
+            Console.WriteLine("Calculating two...");
+            return 200;
+        }
+
+        public static async Task<int> Three()
+        {
+            Console.WriteLine("Calculating three...");
+            return 300;
         }
     }
 }
