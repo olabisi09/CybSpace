@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,36 +11,52 @@ namespace Cyberspace.Starter
     {
         static async Task Main()
         {
-            Console.WriteLine("Calculating...");
-            await Calculate();
+            //var task = new Task[2];
+            //string[] files = null; 
+            //string[] dir = null;
+
+            //string docDirectory = Environment.GetFolderPath(Environment.SpecialFolder.System);
+            //task[0] = Task.Run(() => files = Directory.GetFiles(docDirectory));
+            //task[1] = Task.Factory.StartNew(() => dir = Directory.GetDirectories(docDirectory));
+
+            //Task.Factory.ContinueWhenAll(task, completedFile =>
+            //{
+            //    Console.WriteLine($"{docDirectory} contains");
+            //    Console.WriteLine($"{files.Length} files");
+            //    Console.WriteLine($"{dir.Length} sub-directories");
+            //});
             
-            //Console.Read();
+
+            var x = Task.Run(() => Multiply());
+            var y = Task.Run(() => Add());
+            Console.WriteLine($"Multiply: {x}, Add: {y}");
+            Console.Read();
         }
 
-        public static async Task Calculate()
+        //static async Task<int> Multiply()
+        //{
+        //    Thread.Sleep(2000);
+        //    Console.WriteLine("Multiplying...");
+        //    return 5 * 8;
+        //}
+
+        //static async Task<int> Add()
+        //{
+        //    Console.WriteLine("Adding...");
+        //    return 5 + 8;
+        //}
+
+        static int Multiply()
         {
-            await Task.Run(() => One());
-            await Task.Run(() => Two());
-            await Task.Run(() => Three());
+            Thread.Sleep(2000);
+            Console.WriteLine("Multiplying...");
+            return 5 * 8;
         }
 
-        public static async Task<int> One()
+        static int Add()
         {
-            Thread.Sleep(3000);
-            Console.WriteLine("Calculating one...");
-            return 100;
-        }
-
-        public static async Task<int> Two()
-        {
-            Console.WriteLine("Calculating two...");
-            return 200;
-        }
-
-        public static async Task<int> Three()
-        {
-            Console.WriteLine("Calculating three...");
-            return 300;
+            Console.WriteLine("Adding...");
+            return 5 + 8;
         }
     }
 }
