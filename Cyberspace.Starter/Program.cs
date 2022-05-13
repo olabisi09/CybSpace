@@ -11,70 +11,40 @@ namespace Cyberspace.Starter
     {
         static void Main()
         {
-            goto label1;
-            var x = new DirectoryInfo(".");
-            var dir = new DirectoryInfo(@"C:\Users\DELL\Pictures\testingDocument");
-            Console.WriteLine(x.Name);
-            Console.WriteLine(dir.Name);
-            Console.WriteLine(dir.FullName);
-            Console.WriteLine(dir.Parent);
-            Console.WriteLine(dir.CreationTime);
+            var students = StudentData.Students();
+            string path = @"C:\Users\DELL\Pictures\testingDocument\StudentData.txt";
 
-            string[] words = { "Aule the smith", "Yavanna of the trees", "Manwe of the air", "Mandos" };
-            string path = @"C:\Users\DELL\Pictures\testingDocument";
-
-            //File.AppendAllLines(path, words);
-            //foreach (var line in File.ReadAllLines(path))
-            //{
-            //    Console.WriteLine(line);
-            //}
-
-            var textFile = dir.GetFiles("*.txt", SearchOption.AllDirectories);
-            foreach (var text in textFile)
-            {
-                Console.WriteLine(text.FullName);
-                Console.WriteLine(text.CreationTime);
-            }
-
-            WriteStuff();
-            ReadStuff();
-        label1:
-            UseFileStreamWrite();
-            
+            //WriteToFile(students, path);
+            ReadFromFile(path);
         }
 
-        static void UseFileStreamWrite()
+        static void WriteToFile(List<StudentData> students, string path)
         {
-            string path = @"C:\Users\DELL\Pictures\testingDocument\testing.txt";
-            var fileStream = File.Open(path, FileMode.Create);
-            string word = "Ainulindale: the first book in the Silmarillion";
+            var fileStream = new FileStream(path, FileMode.Open);
+            string stuffToWrite = "";
 
-            byte[] list = Encoding.Default.GetBytes(word);
-            fileStream.Write(list, 0, list.Length);
-
-            fileStream.Position = 0;
-            byte[] fileList = new byte[list.Length];
-            for(int i = 0; i < list.Length; i++)
+            foreach (var student in students)
             {
-                fileList[i] = (byte)fileStream.ReadByte();
+                stuffToWrite = $"Name: {student.Name}, Age: {student.Age}, Class: {student.Class}, Grade: {student.Grade}\n";
+                byte[] stuffInBytes = Encoding.Default.GetBytes(stuffToWrite);
+                fileStream.Write(stuffInBytes, 0, stuffInBytes.Length);
             }
-            Console.WriteLine(Encoding.Default.GetString(fileList));
+
             fileStream.Close();
         }
 
-        static void WriteStuff()
+        static void ReadFromFile(string path)
         {
-            var streamWriter = new StreamWriter(@"C:\Users\DELL\Pictures\testingDocument\testing.txt");
-            streamWriter.WriteLine("Behold the Valar!");
-            streamWriter.WriteLine("Manwe");
-            streamWriter.Close();
-        }
+            var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
+            //byte[] stuff = new byte[fileStream.Length];
 
-        static void ReadStuff()
-        {
-            var streamWriter = new StreamReader(@"C:\Users\DELL\Pictures\testingDocument\testing.txt");
-            Console.WriteLine(streamWriter.ReadToEnd());
-            streamWriter.Close();
+            byte[] buffer = new byte[1024];
+            var byteRead = fileStream.Read(buffer, 0, buffer.Length);
+
+            var stringResult = Encoding.Default.GetString(buffer, 0, byteRead);
+
+            Console.WriteLine(stringResult);
+            fileStream.Close();
         }
     }
 
@@ -85,7 +55,7 @@ namespace Cyberspace.Starter
         public string Class { get; set; }
         public decimal Grade { get; set; }
 
-        public List<StudentData> Students()
+        public static List<StudentData> Students()
         {
             return new List<StudentData>
             {
