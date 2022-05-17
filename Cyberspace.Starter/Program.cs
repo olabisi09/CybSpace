@@ -15,7 +15,7 @@ namespace Cyberspace.Starter
             string path = @"C:\Users\DELL\Pictures\testingDocument\StudentData.txt";
 
             //WriteToFile(students, path);
-            ReadFromFile(path);
+            //ReadFromFile(path);
         }
 
         static void WriteToFile(List<StudentData> students, string path)
@@ -36,9 +36,8 @@ namespace Cyberspace.Starter
         static void ReadFromFile(string path)
         {
             var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
-            //byte[] stuff = new byte[fileStream.Length];
 
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[fileStream.Length];
             var byteRead = fileStream.Read(buffer, 0, buffer.Length);
 
             var stringResult = Encoding.Default.GetString(buffer, 0, byteRead);
