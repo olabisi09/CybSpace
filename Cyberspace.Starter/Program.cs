@@ -14,8 +14,8 @@ namespace Cyberspace.Starter
             var students = StudentData.Students();
             string path = @"C:\Users\DELL\Pictures\testingDocument\StudentData.txt";
 
-            //WriteToFile(students, path);
-            //ReadFromFile(path);
+            string[] words = {"hello", "world"};
+            Console.WriteLine(String.Join(",", words));
         }
 
         static void WriteToFile(List<StudentData> students, string path)
